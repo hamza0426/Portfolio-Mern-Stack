@@ -1,0 +1,29 @@
+
+# Common
+node_modules/
+.env
+config.env
+.DS_Store
+*.log
+/tmp
+/dist
+/build
+package-lock.json
+package.json
+.vscode/
+.idea/
+
+# Backend specific
+/backend/node_modules/
+/backend/config/config.env
+/backend/.env
+/backend/package-lock.json
+/backend/package.json
+
+# Frontend specific
+/frontend/node_modules/
+/frontend/.env
+/frontend/dist/
+/frontend/.vite/
+/frontend/package-lock.json
+/frontend/package.json
