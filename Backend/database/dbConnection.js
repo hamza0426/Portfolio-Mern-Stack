@@ -6,7 +6,7 @@ const dbConnection = () => {
     }).then(() => {
         console.log("Database connected Successfully!!!")
     }).catch((error) => {
-        console.log(`Some internal Server error while connection DB: ${error}`)
+        console.log(`Some internal Server error while connecting to DB: ${error}`)
     });
 };
 
