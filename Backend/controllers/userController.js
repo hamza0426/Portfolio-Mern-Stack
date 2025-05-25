@@ -91,7 +91,7 @@ export const updateProfile = catchAsyncErrors(async(req, res, next) => {
     const userData = {
         fullName: req.body.fullName,
         email: req.body.email,
-        phone: req.body,phone, 
+        phone: req.body.phone, 
         aboutMe: req.body.aboutMe,
         portfolioURL: req.body.portfolioURL,
         githubURL: req.body.githubURL,
@@ -133,4 +133,25 @@ export const updateProfile = catchAsyncErrors(async(req, res, next) => {
         message: "Profile Updated Successfully!!!",
         user,
     });
-})
+});
+
+export const updatePassword = catchAsyncErrors(async(req, res, next) => {
+    const {currentPassword, newPassword, confirmPassword} = req.body;
+    if(!currentPassword || !newPassword || !confirmPassword) {
+        return next(new ErrorHandler("Please fill all Fields!!!", 400));
+    }
+    const user = await User.findById(req.user.id).select("+password");
+    const isPasswordMatched = await user.comparePassword(currentPassword);
+    if(!isPasswordMatched) {
+        return next(new ErrorHandler("Current Password is Incorrect!!!", 400));
+    }
+    if(newPassword !== confirmPassword) {
+        return next(new ErrorHandler("New Password and Confirm Password do not match!!!", 400));
+    }
+    user.password = newPassword;
+    await user.save();
+    res.status(200).json({
+        success: true,
+        message: "Password Updated Successfully!!!",
+    });
+}) 
