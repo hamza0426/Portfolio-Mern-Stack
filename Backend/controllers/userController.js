@@ -3,6 +3,8 @@ import ErrorHandler from "../middlewares/error.js";
 import { User } from "../models/userSchema.js";
 import { v2 as cloudinary } from "cloudinary";
 import { generateToken } from "../utils/jwtToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 export const register = catchAsyncErrors(async(req, res, next) => {
     if(!req.files || Object.keys(req.files).length === 0) {
@@ -136,7 +138,7 @@ export const updateProfile = catchAsyncErrors(async(req, res, next) => {
 });
 
 export const updatePassword = catchAsyncErrors(async(req, res, next) => {
-    const {currentPassword, newPassword, confirmPassword} = req.body;
+    const {currentPassword, newPassword, confirmPassword} = req.body || {};
     if(!currentPassword || !newPassword || !confirmPassword) {
         return next(new ErrorHandler("Please fill all Fields!!!", 400));
     }
@@ -154,4 +156,65 @@ export const updatePassword = catchAsyncErrors(async(req, res, next) => {
         success: true,
         message: "Password Updated Successfully!!!",
     });
-}) 
+});
+
+export const getUserWithoutAuthentication = catchAsyncErrors(async(req, res, next) => {
+    const id = "682cf21c8f90b83e995ddefb";
+    const user = await User.findById(id);
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
+
+export const forgotPassword = catchAsyncErrors(async(req, res, next) => {
+    const user = await User.findOne({ email: req.body.email });
+    if(!user) {
+        return next(new ErrorHandler("User not found!!!", 404));
+    }
+
+    const resetCode = user.getResetCode();
+    await user.save({ validateBeforeSave: false });
+    const resetPasswordUrl = `${process.env.DASHBOARD_URL}/password/reset/${resetCode}`;
+    const message = `Your reset Password code is: \n\n ${resetPasswordUrl} \n\n Ignore this message if you
+    have not requested for this code.`;
+
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: "Personal Portfolio Password Reset Email",
+            message,
+        });
+        res.status(200).json({
+            success: true,
+            message: `Email sent to ${user.email} Successfully!!!`,
+        });
+    } catch (error) {
+        user.resetPasswordExpire = undefined;
+        user.resetPasswordCode = undefined;
+        await user.save();
+        return next(new ErrorHandler(error.message, 500));
+    }
+});
+
+export const resetPassword = catchAsyncErrors(async(req, res, next) => {
+    const { token } = req.params || {};
+    const resetPasswordCode = crypto.createHash("sha256").update(token).digest("hex");
+    const user = await User.findOne({
+        resetPasswordCode,
+        resetPasswordExpire: { $gt: Date.now() },
+    });
+    if(!user) {
+        return next(new ErrorHandler("Reset Password Code is Invalid!!!", 400));
+    }
+    if(req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorHandler("Password and Confirm Password Do not match!!"));
+    }
+    user.password = req.body.password;
+    user.resetPasswordExpire = undefined;
+    user.resetPasswordCode = undefined;
+
+    await user.save();
+    generateToken(user, "Password Reset Successfully!!!", 200, res);
+});
+

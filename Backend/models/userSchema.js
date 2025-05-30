@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const userSchema = new mongoose.Schema({
     fullName: {
@@ -55,7 +56,7 @@ const userSchema = new mongoose.Schema({
     facebookURL: String,
     twitterURL: String,
 
-    resetPasswordToken: String,
+    resetPasswordCode: String,
     resetPasswordExpire: Date,
 });
 
@@ -73,10 +74,18 @@ userSchema.methods.comparePassword = async function(enteredPassword) {
 };
 
 //for generating json web token
-userSchema.methods.generateJsonWebToken = function(){
+userSchema.methods.generateJsonWebToken = function() {
     return jwt.sign({id: this._id}, process.env.JWT_SECRET_KEY, {
         expiresIn: process.env.JWT_EXPIRES,
-    })
+    });
+};
+
+userSchema.methods.getResetCode = function() {
+    const resetCode = crypto.randomBytes(20).toString("hex");
+
+    this.resetPasswordCode = crypto.createHash("sha256").update(resetCode).digest("hex");
+    this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+    return resetCode;
 }
 
 export const User = mongoose.model("User", userSchema);
