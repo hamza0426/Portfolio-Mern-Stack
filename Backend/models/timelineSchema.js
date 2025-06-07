@@ -10,8 +10,14 @@ const timelineSchema = new mongoose.Schema({
         required: [true, "Description is Required!!"],
     },
     timeline: {
-        from: String,
-        to: String,
+        from: {
+            type: String,
+            required: [true, "Timeline Starting date is required!!"]
+        }, 
+        to: {
+            type: String,
+            required: [true, "Timeline ending date is required!!"]
+        },
     },
 });
 
