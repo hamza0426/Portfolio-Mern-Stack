@@ -21,9 +21,9 @@ package.json
 /backend/package.json
 
 # Frontend specific
-/frontend/node_modules/
-/frontend/.env
-/frontend/dist/
-/frontend/.vite/
-/frontend/package-lock.json
-/frontend/package.json
+/Admin-Panel/package.json
+/Admin-Panel/node_modules/
+/Admin-Panel/dist/
+/Admin-Panel/.vite/
+/Admin-Panel/.env
+/Admin-Panel/package-lock.json

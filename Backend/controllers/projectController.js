@@ -35,12 +35,21 @@ export const addProject = catchAsyncErrors(async(req, res, next) => {
 });
 
 export const deleteProject = catchAsyncErrors(async(req, res, next) => {
-
+    const { id } = req.params;
+    const project = await Projects.findById(id);
+    if(!project) {
+        return next(new ErrorHandler("Project did not exist!!!", 404));
+    }
+    await project.deleteOne();
+    res.status(200).json({
+        success: true,
+        message: "Project deleted Successfully!!",
+    });
 });
 
 export const updateProject = catchAsyncErrors(async(req, res, next) => {
     // const { id } = req.params;
-    // let project = await Projects.findById(id);
+    // const project = await Projects.findById(id);
     // if(!project) {
     //     return next(new ErrorHandler("Project did not exist!!!", 404));
     // }
@@ -79,3 +88,24 @@ export const updateProject = catchAsyncErrors(async(req, res, next) => {
         project,
     }); 
 });
+
+export const getAllProjects = catchAsyncErrors(async(req, res, next) => {
+    const projects = await Projects.find();
+    res.status(200).json({
+        success: true,
+        message: "All Projects fetched Successfully!!",
+        projects,
+    });
+});
+
+export const getOneProject = catchAsyncErrors(async(req, res, next) => {
+    const { id } = req.params;
+    const project = await Projects.findById(id);
+    if(!project) {
+        return next(new ErrorHandler("Project did not exist!!", 404));
+    }
+    res.status(200).json({
+        success: true,
+        project,
+    })
+})
