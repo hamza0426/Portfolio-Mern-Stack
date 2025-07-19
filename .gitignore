@@ -8,8 +8,8 @@ config.env
 /tmp
 /dist
 /build
-package-lock.json
-package.json
+# package-lock.json
+# package.json
 .vscode/
 .idea/
 
@@ -17,13 +17,13 @@ package.json
 /backend/node_modules/
 /backend/config/config.env
 /backend/.env
-/backend/package-lock.json
-/backend/package.json
+# /backend/package-lock.json
+# /backend/package.json
 
 # Frontend specific
-/Admin-Panel/package.json
+# /Admin-Panel/package.json
 /Admin-Panel/node_modules/
 /Admin-Panel/dist/
 /Admin-Panel/.vite/
 /Admin-Panel/.env
-/Admin-Panel/package-lock.json
+# /Admin-Panel/package-lock.json
