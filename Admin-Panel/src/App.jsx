@@ -12,7 +12,7 @@ import ManageSkills from './pages/ManageSkills';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
-import { getUser } from './store/slices/userSlice';
+import { getUser } from './store/slices/user/infoSlice';
 
 const App = () => {
   const dispatch = useDispatch();

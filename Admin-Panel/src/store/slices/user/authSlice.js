@@ -83,4 +83,8 @@ export const logout = () => async (dispatch) => {
   }
 };
 
+export const clearUserErrors = () => (dispatch) => {
+  dispatch(clearAllErrors());
+};
+
 export default authSlice.reducer;

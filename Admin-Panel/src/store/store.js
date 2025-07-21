@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import userReducer from "./slices/userSlice"
+
 import {
   authReducer,
   passwordReducer,
   profileReducer,
   infoReducer,
-} from "./userSlices";
+} from "./slices/user"; // <-- Correct path to index.js
 
 export const store = configureStore({
   reducer: {

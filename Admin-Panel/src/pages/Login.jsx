@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { login } from "@store/slices/userSlice";
-import { clearUserErrors } from '../store/slices/userSlice';
+import { login , clearUserErrors } from "../store/slices/user/authSlice.js";
 import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {loading, isLoggedIn, error} = useSelector((state) => state.user);
+  const {loading, isLoggedIn, error} = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

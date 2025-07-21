@@ -29,6 +29,7 @@ const passwordSlice = createSlice({
     },
     clearAllErrors(state) {
       state.error = null;
+      // state.message = null;
     },
   },
 });
@@ -43,15 +44,16 @@ export const {
 export const forgotPassword = (email) => async (dispatch) => {
   dispatch(passwordRequest());
   try {
-    const data = await axios.post(
-      `${server}api/v1/user/forgot-password`,
+    const response = await axios.post(
+      `${server}/api/v1/user/forgot-password`,
       { email },
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
-    dispatch(passwordSuccess(data.message));
+    // console.log(response.data);
+    dispatch(passwordSuccess(response.data.message));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(passwordFailed(error.response.data.message));
+    dispatch(passwordFailed(error.response?.data?.message));
   }
 };
 
@@ -70,7 +72,7 @@ export const resetPassword =
       dispatch(passwordSuccess(data.message));
       dispatch(clearAllErrors());
     } catch (error) {
-      dispatch(passwordFailed(error.response.data.message));
+      dispatch(passwordFailed(error.response?.data?.message));
     }
   };
 

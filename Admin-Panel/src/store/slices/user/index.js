@@ -1,6 +1,6 @@
 // src/store/slices/user/index.js
 
-export { default as authSlice } from "./authSlice";
-export { default as profileSlice } from "./profileSlice";
-export { default as userInfoSlice } from "./infoSlice";
-// export { default as passwordSlice } from "./passwordSlice";
+export { default as authReducer } from "./authSlice";
+export { default as profileReducer } from "./profileSlice";
+export { default as infoReducer } from "./infoSlice";
+export { default as passwordReducer } from "./passwordSlice";
