@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -65,7 +66,7 @@ const ForgotPassword = () => {
             onClick={handleForgotPass}
             className="w-full bg-indigo-600 text-white py-2 rounded-lg font-semibold hover:bg-indigo-700 transition"
           >
-            Reset Password
+            Request for Reset Password
           </button>
           }
         </form>
