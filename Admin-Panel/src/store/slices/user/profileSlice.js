@@ -31,6 +31,11 @@ const profileSlice = createSlice({
       state.message = null;
       state.error = action.payload;
     },
+    resetUpdateStatus(state) {
+      state.error = null;
+      state.isUpdated = false;
+      state.message = null;
+    },
     clearAllErrors(state) {
       state.error = null;
       // state.user = state.user;
@@ -38,8 +43,13 @@ const profileSlice = createSlice({
   },
 });
 
-export const { updateRequest, updateSuccess, updateFailed, clearAllErrors } =
-  profileSlice.actions;
+export const {
+  updateRequest,
+  updateSuccess,
+  updateFailed,
+  resetUpdateStatus,
+  clearAllErrors,
+} = profileSlice.actions;
 
 export const updateProfile = (datas) => async (dispatch) => {
   dispatch(updateRequest());
@@ -77,5 +87,9 @@ export const updatePassword =
       dispatch(updateFailed(error.response?.data?.message));
     }
   };
+
+export const resetProfile = () => (dispatch) => {
+  dispatch(resetUpdateStatus());
+};
 
 export default profileSlice.reducer;
