@@ -1,40 +1,44 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import ManageTimeline from './pages/ManageTimeline';
-import ManageProjects from './pages/ManageProjects';
-import ViewProject from './pages/ViewProject';
-import UpdateProject from './pages/UpdateProject';
-import Login from './pages/Login';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import ManageSkills from './pages/ManageSkills';
+import ManageTimeline from "./pages/ManageTimeline";
+import ManageProjects from "./pages/ManageProjects";
+import ViewProject from "./pages/ViewProject";
+import UpdateProject from "./pages/UpdateProject";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import ManageSkills from "./pages/ManageSkills";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
-import { getUser } from './store/slices/user/infoSlice';
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { getUser } from "./store/slices/user/authSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-    useEffect(() => {
-      dispatch(getUser);
+  useEffect(() => {
+    dispatch(getUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  }, []);
 
   return (
     <Router>
-      <ToastContainer position="bottom-right" autoClose={3000} pauseOnHover={true} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        pauseOnHover={true}
+      />
       <Routes>
-        <Route path='/' element={< Home />} />
-        <Route path='/login' element={< Login />} />
-        <Route path='/forgot-password' element={<ForgotPassword />} />
-        <Route path='/reset-password/:token' element={<ResetPassword />} />
-        <Route path='/skills' element={<ManageSkills />} />
-        <Route path='/timeline' element={<ManageTimeline />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+        <Route path="/skills" element={<ManageSkills />} />
+        <Route path="/timeline" element={<ManageTimeline />} />
         {/* <Route path='/software' element={<} /> */}
-        <Route path='/projects' element={<ManageProjects />} />
-        <Route path='/view-project' element={<ViewProject />} />
-        <Route path='/update-project' element={<UpdateProject />} />
+        <Route path="/projects" element={<ManageProjects />} />
+        <Route path="/view-project" element={<ViewProject />} />
+        <Route path="/update-project" element={<UpdateProject />} />
       </Routes>
     </Router>
   );

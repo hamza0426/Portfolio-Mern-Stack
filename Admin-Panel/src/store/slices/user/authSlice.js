@@ -83,6 +83,19 @@ export const logout = () => async (dispatch) => {
   }
 };
 
+export const getUser = () => async (dispatch) => {
+  dispatch(requestStart());
+  try {
+    const { data } = await axios.get(`${server}/api/v1/user/get-user`, {
+      withCredentials: true,
+    });
+    dispatch(requestSuccess(data.user));
+    dispatch(clearAllErrors());
+  } catch (error) {
+    dispatch(requestFailed(error.response?.data?.message));
+  }
+};
+
 export const clearUserErrors = () => (dispatch) => {
   dispatch(clearAllErrors());
 };

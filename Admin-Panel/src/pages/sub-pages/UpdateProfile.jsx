@@ -6,8 +6,7 @@ import {
   resetProfile,
   updateProfile,
 } from "../../store/slices/user/profileSlice.js";
-import { clearUserErrors } from "../../store/slices/user/authSlice.js";
-import { getUser } from "../../store/slices/user/infoSlice.js";
+import { clearUserErrors, getUser } from "../../store/slices/user/authSlice.js";
 import Loader from "../../components/Loader";
 // import SpecialLoadingButton from "./SpecialLoadingButton";
 
@@ -79,6 +78,7 @@ const UpdateProfile = () => {
     if (isUpdated) {
       dispatch(getUser());
       dispatch(resetProfile());
+      //navigate('/profile')
     }
     if (message) {
       toast.success(message);
