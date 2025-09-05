@@ -75,7 +75,7 @@ export const logout = () => async (dispatch) => {
       withCredentials: true,
     });
     dispatch(logoutSuccess());
-    toast.success(data.message || "Logged out successfully");
+    toast.success(data.message);
   } catch (error) {
     const errMsg = error.response?.data?.message || "Logout failed";
     dispatch(requestFailed(errMsg));
