@@ -92,4 +92,8 @@ export const resetProfile = () => (dispatch) => {
   dispatch(resetUpdateStatus());
 };
 
+export const clearProfileErrors = () => (dispatch) => {
+  dispatch(clearAllErrors());
+};
+
 export default profileSlice.reducer;

@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { clearUserErrors } from "../../store/slices/user/authSlice.js";
+// import { clearUserErrors } from "../../store/slices/user/authSlice.js";
 import {
+  clearProfileErrors,
   resetProfile,
   updatePassword,
 } from "../../store/slices/user/profileSlice.js";
@@ -26,7 +27,7 @@ const Profile = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(clearUserErrors());
+      dispatch(clearProfileErrors());
     }
     if (isUpdated) {
       dispatch(resetProfile());
