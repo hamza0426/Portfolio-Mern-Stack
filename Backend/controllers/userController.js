@@ -42,7 +42,9 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     portfolioURL,
     githubURL,
     instagramURL,
+    twitterURL,
     linkedInURL,
+    facebookURL,
   } = req.body;
 
   const user = await User.create({
@@ -53,8 +55,10 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     password,
     portfolioURL,
     githubURL,
+    twitterURL,
     instagramURL,
     linkedInURL,
+    facebookURL,
     avatar: {
       public_id: cloudinaryAvatar.public_id,
       url: cloudinaryAvatar.secure_url,
@@ -114,6 +118,8 @@ export const updateProfile = catchAsyncErrors(async (req, res, next) => {
     githubURL: req.body.githubURL,
     instagramURL: req.body.instagramURL,
     linkedInURL: req.body.linkedInURL,
+    facebookURL: req.body.facebookURL,
+    twitterURL: req.body.twitterURL,
   };
 
   if (req.files && req.files.avatar) {

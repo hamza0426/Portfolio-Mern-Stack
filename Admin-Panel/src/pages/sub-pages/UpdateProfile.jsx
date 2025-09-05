@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -14,6 +15,7 @@ const UpdateProfile = () => {
   const { loading, error, isUpdated, message } = useSelector(
     (state) => state.profile
   );
+  // const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
   const [fullName, setFullName] = useState(user?.fullName || "");
@@ -78,7 +80,7 @@ const UpdateProfile = () => {
     if (isUpdated) {
       dispatch(getUser());
       dispatch(resetProfile());
-      //navigate('/profile')
+      // navigate("/profile");
     }
     if (message) {
       toast.success(message);

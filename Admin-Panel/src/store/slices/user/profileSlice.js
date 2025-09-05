@@ -51,12 +51,12 @@ export const {
   clearAllErrors,
 } = profileSlice.actions;
 
-export const updateProfile = (datas) => async (dispatch) => {
+export const updateProfile = (updatedData) => async (dispatch) => {
   dispatch(updateRequest());
   try {
     const { data } = await axios.put(
       `${server}/api/v1/user/update-profile`,
-      datas,
+      updatedData,
       {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
