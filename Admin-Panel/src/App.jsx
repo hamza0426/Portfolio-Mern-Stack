@@ -13,11 +13,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/slices/user/authSlice";
+import { getAllMessages } from "./store/slices/Message/messagesSlice";
+import Messages from "./pages/sub-pages/Messages";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
+    dispatch(getAllMessages());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -39,6 +42,7 @@ const App = () => {
         <Route path="/projects" element={<ManageProjects />} />
         <Route path="/view-project" element={<ViewProject />} />
         <Route path="/update-project" element={<UpdateProject />} />
+        <Route path="/messages" element={<Messages />} />
       </Routes>
     </Router>
   );
