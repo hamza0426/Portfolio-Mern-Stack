@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  // clearAllMessageErrors,
-  // deleteMessage,
+  clearAllMessageErrors,
+  deleteMessage,
   getAllMessages,
-  // resetMessagesSlice,
+  resetMessageSlice,
 } from "../../store/slices/Message/messagesSlice.js";
 import SpecialLoader from "../../components/SpecialLoader";
 
 const Messages = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { allMessages, loading, error, message } = useSelector(
@@ -20,14 +20,14 @@ const Messages = () => {
 
   const [messageId, setMessageId] = useState("");
 
-  const handleReturnToDashboard = () => {
-    console.log("Navogating to dashboard...");
-    navigate("/");
-  };
+  // const handleReturnToDashboard = () => {
+  //   // console.log("Navogating to dashboard...");
+  //   navigate("/");
+  // };
 
   const handleMessageDelete = (id) => {
     setMessageId(id);
-    // dispatch(deleteMessage(id));
+    dispatch(deleteMessage(id));
   };
 
   // useEffect(() => {
@@ -37,11 +37,11 @@ const Messages = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      // dispatch(clearAllMessageErrors());
+      dispatch(clearAllMessageErrors());
     }
     if (message) {
       toast.success(message);
-      // dispatch(resetMessagesSlice());
+      dispatch(resetMessageSlice());
       dispatch(getAllMessages());
     }
   }, [dispatch, error, message, loading]);
@@ -53,12 +53,12 @@ const Messages = () => {
         {/* Header */}
         <div className="flex gap-4 justify-between items-center p-4 border-b">
           <h2 className="text-xl font-semibold">Messages</h2>
-          <button
+          {/* <button
             onClick={handleReturnToDashboard}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
           >
             Return to Dashboard
-          </button>
+          </button> */}
         </div>
 
         {/* Content */}

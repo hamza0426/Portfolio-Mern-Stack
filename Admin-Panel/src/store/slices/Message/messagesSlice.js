@@ -57,6 +57,10 @@ export const {
   getAllMessagesRequest,
   getAllMessagesSuccess,
   getAllMessagesFailed,
+  deleteMessageRequest,
+  deleteMessageSuccess,
+  deleteMessageFailed,
+  resetMessage,
   clearAllErrors,
 } = messageSlice.actions;
 
@@ -74,6 +78,28 @@ export const getAllMessages = () => async (dispatch) => {
   } catch (error) {
     dispatch(getAllMessagesFailed(error.response?.data?.message));
   }
+};
+
+export const deleteMessage = (id) => async (dispatch) => {
+  dispatch(deleteMessageRequest());
+  try {
+    const { data } = await axios.delete(
+      `${server}/api/v1/message/delete-message/${id}`,
+      { withCredentials: true }
+    );
+    dispatch(deleteMessageSuccess(data.message));
+    dispatch(clearAllErrors());
+  } catch (error) {
+    dispatch(deleteMessageFailed(error.response?.data?.message));
+  }
+};
+
+export const clearAllMessageErrors = () => (dispatch) => {
+  dispatch(clearAllErrors());
+};
+
+export const resetMessageSlice = () => (dispatch) => {
+  dispatch(resetMessage());
 };
 
 export default messageSlice.reducer;
