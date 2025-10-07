@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { authReducer, passwordReducer, profileReducer } from "./slices/user"; // <-- Correct path to index.js
 import { default as messageReducer } from "./slices/Message/messagesSlice";
+import { default as timelineReducer } from "./slices/Timeline/timelineSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,7 +11,10 @@ export const store = configureStore({
     profile: profileReducer,
     password: passwordReducer,
 
-    // Message Reducers
+    // Message Reducer
     messages: messageReducer,
+
+    // Timeline Reducer
+    timelines: timelineReducer,
   },
 });
