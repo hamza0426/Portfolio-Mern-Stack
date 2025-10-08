@@ -82,9 +82,9 @@ const timelineSlice = createSlice({
     //   state.loading = false;
     // },
     resetTimeline(state) {
+      state.loading = false;
       state.error = null;
       state.message = null;
-      state.loading = false;
     },
     clearAllErrors(state) {
       state.error = null;
