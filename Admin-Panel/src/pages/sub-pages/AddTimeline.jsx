@@ -87,7 +87,7 @@ const AddTimeline = () => {
               {/* From */}
               <div className="w-full">
                 <label className="block text-sm font-medium text-gray-900">
-                  Starting Point (From)
+                  From
                 </label>
                 <div className="mt-2">
                   <input
@@ -103,7 +103,7 @@ const AddTimeline = () => {
               {/* To */}
               <div className="w-full">
                 <label className="block text-sm font-medium text-gray-900">
-                  Ending Point (To)
+                  To
                 </label>
                 <div className="mt-2">
                   <input

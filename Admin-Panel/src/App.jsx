@@ -15,12 +15,14 @@ import { useDispatch } from "react-redux";
 import { getUser } from "./store/slices/user/authSlice";
 import { getAllMessages } from "./store/slices/Message/messagesSlice";
 import Messages from "./pages/sub-pages/Messages";
+import { getAllTimelines } from "./store/slices/Timeline/timelineSlice";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
     dispatch(getAllMessages());
+    dispatch(getAllTimelines());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

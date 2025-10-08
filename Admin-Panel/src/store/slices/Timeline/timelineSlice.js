@@ -13,50 +13,74 @@ const timelineSlice = createSlice({
   name: "timelines",
   initialState,
   reducers: {
-    addTimelineRequest(state) {
+    // addTimelineRequest(state) {
+    //   state.loading = true;
+    //   state.error = null;
+    //   state.message = null;
+    // },
+    requestStart(state) {
       state.loading = true;
+      // state.timeline = [];
       state.error = null;
       state.message = null;
     },
-    addTimelineSuccess(state, action) {
+    // addTimelineSuccess(state, action) {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.message = action.payload;
+    // },
+    requestSuccess(state, action) {
       state.loading = false;
-      state.error = null;
-      state.message = action.payload;
-    },
-    addTimelineFailed(state, action) {
-      state.loading = false;
-      state.error = action.payload;
-      state.message = null;
-    },
-    getAllTimelinesRequest(state) {
-      state.timeline = [];
-      state.error = null;
-      state.loading = true;
-    },
-    getAllTimelinesSuccess(state, action) {
       state.timeline = action.payload;
       state.error = null;
-      state.loading = false;
-    },
-    getAllTimelinesFailed(state, action) {
-      state.error = action.payload;
-      state.loading = false;
-    },
-    deleteTimelineRequest(state) {
-      state.message = null;
-      state.error = null;
-      state.loading = true;
-    },
-    deleteTimelineSuccess(state, action) {
       state.message = action.payload;
-      state.error = null;
-      state.loading = false;
+      //     if (Array.isArray(action.payload)) {
+      //   state.timeline = action.payload; // For getAllTimelines
+      // } else if (typeof action.payload === "string") {
+      //   state.message = action.payload; // For add/delete messages
+      // } else if (typeof action.payload === "object") {
+      //   state.timeline = [...state.timeline, action.payload]; // For add single timeline
+      // }
     },
-    deleteTimelineFailed(state, action) {
-      state.message = null;
+    // addTimelineFailed(state, action) {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    //   state.message = null;
+    // },
+    requestFailed(state, action) {
+      state.loading = false;
       state.error = action.payload;
-      state.loading = false;
+      state.message = null;
     },
+    // getAllTimelinesRequest(state) {
+    //   state.timeline = [];
+    //   state.error = null;
+    //   state.loading = true;
+    // },
+    // getAllTimelinesSuccess(state, action) {
+    //   state.timeline = action.payload;
+    //   state.error = null;
+    //   state.loading = false;
+    // },
+    // getAllTimelinesFailed(state, action) {
+    //   state.error = action.payload;
+    //   state.loading = false;
+    // },
+    // deleteTimelineRequest(state) {
+    //   state.message = null;
+    //   state.error = null;
+    //   state.loading = true;
+    // },
+    // deleteTimelineSuccess(state, action) {
+    //   state.message = action.payload;
+    //   state.error = null;
+    //   state.loading = false;
+    // },
+    // deleteTimelineFailed(state, action) {
+    //   state.message = null;
+    //   state.error = action.payload;
+    //   state.loading = false;
+    // },
     resetTimeline(state) {
       state.error = null;
       state.message = null;
@@ -69,21 +93,24 @@ const timelineSlice = createSlice({
 });
 
 export const {
-  addTimelineRequest,
-  addTimelineSuccess,
-  addTimelineFailed,
-  getAllTimelinesRequest,
-  getAllTimelinesSuccess,
-  getAllTimelinesFailed,
-  deleteTimelineRequest,
-  deleteTimelineSuccess,
-  deleteTimelineFailed,
+  requestStart,
+  requestSuccess,
+  requestFailed,
+  // addTimelineRequest,
+  // addTimelineSuccess,
+  // addTimelineFailed,
+  // getAllTimelinesRequest,
+  // getAllTimelinesSuccess,
+  // getAllTimelinesFailed,
+  // deleteTimelineRequest,
+  // deleteTimelineSuccess,
+  // deleteTimelineFailed,
   resetTimeline,
   clearAllErrors,
 } = timelineSlice.actions;
 
 export const addNewTimeline = (timelineData) => async (dispatch) => {
-  dispatch(addTimelineRequest());
+  dispatch(requestStart());
   try {
     const { data } = await axios.post(
       `${server}/api/v1/timeline/add-timeline`,
@@ -93,15 +120,15 @@ export const addNewTimeline = (timelineData) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
       }
     );
-    dispatch(addTimelineSuccess(data.message));
+    dispatch(requestSuccess(data.message));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(addTimelineFailed(error.response?.data?.message));
+    dispatch(requestFailed(error.response?.data?.message));
   }
 };
 
 export const getAllTimelines = () => async (dispatch) => {
-  dispatch(getAllTimelinesRequest());
+  dispatch(requestStart());
   try {
     const { data } = await axios.get(
       `${server}/api/v1/timeline/get-all-timelines`,
@@ -109,24 +136,24 @@ export const getAllTimelines = () => async (dispatch) => {
         withCredentials: true,
       }
     );
-    dispatch(getAllTimelinesSuccess(data.messages));
+    dispatch(requestSuccess(data.messages));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(getAllTimelinesFailed(error.response?.data?.message));
+    dispatch(requestFailed(error.response?.data?.message));
   }
 };
 
 export const deleteTimeline = (id) => async (dispatch) => {
-  dispatch(deleteTimelineRequest());
+  dispatch(requestStart());
   try {
     const { data } = await axios.delete(
       `${server}/api/v1/timeline/delete-timeline/${id}`,
       { withCredentials: true }
     );
-    dispatch(deleteTimelineSuccess(data.message));
+    dispatch(requestSuccess(data.message));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(deleteTimelineFailed(error.response?.data?.message));
+    dispatch(requestFailed(error.response?.data?.message));
   }
 };
 
