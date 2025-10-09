@@ -5,6 +5,7 @@ import { default as messageReducer } from "./slices/Message/messageSlice";
 import { default as timelineReducer } from "./slices/Timeline/timelineSlice";
 import { default as skillReducer } from "./slices/Skill/skillSlice";
 import { default as applicationReducer } from "./slices/Application/applicationSlice";
+import { default as projectReducer } from "./slices/Project/projectSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,5 +25,8 @@ export const store = configureStore({
 
     // Application Reducer
     applications: applicationReducer,
+
+    // Project Reducer
+    projects: projectReducer,
   },
 });
