@@ -4,6 +4,7 @@ import { authReducer, passwordReducer, profileReducer } from "./slices/user"; //
 import { default as messageReducer } from "./slices/Message/messageSlice";
 import { default as timelineReducer } from "./slices/Timeline/timelineSlice";
 import { default as skillReducer } from "./slices/Skill/skillSlice";
+import { default as applicationReducer } from "./slices/Application/applicationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,8 @@ export const store = configureStore({
 
     // Skill Reducer
     skills: skillReducer,
+
+    // Application Reducer
+    applications: applicationReducer,
   },
 });

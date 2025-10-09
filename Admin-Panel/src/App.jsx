@@ -17,6 +17,7 @@ import { getAllMessages } from "./store/slices/Message/messageSlice";
 import Messages from "./pages/sub-pages/Messages";
 import { getAllTimelines } from "./store/slices/Timeline/timelineSlice";
 import { getAllSkills } from "./store/slices/Skill/skillSlice";
+import { getAllApplications } from "./store/slices/Application/applicationSlice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const App = () => {
     dispatch(getAllMessages());
     dispatch(getAllTimelines());
     dispatch(getAllSkills());
+    dispatch(getAllApplications());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

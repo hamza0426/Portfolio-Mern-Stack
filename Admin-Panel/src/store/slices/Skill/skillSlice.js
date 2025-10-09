@@ -151,6 +151,8 @@ export const deleteSkill = (id) => async (dispatch) => {
   }
 };
 
+// export const updateSkill = (proficiency) => async (dispatch) => {}
+
 export const clearAllSkillErrors = () => (dispatch) => {
   dispatch(clearAllErrors());
 };
