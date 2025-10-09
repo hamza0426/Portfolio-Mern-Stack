@@ -13,35 +13,67 @@ const skillSlice = createSlice({
   name: "skills",
   initialState,
   reducers: {
-    getAllSkillsRequest(state) {
+    skillRequestStart(state) {
       state.loading = true;
       state.skills = [];
       state.error = null;
+      state.message = null;
     },
+    // skillRequestSuccess(state, action) {
+    //   state.loading = false;
+    //   state.skills = action.payload;
+    //   state.error = null;
+    //   state.message = action.payload;
+    // },
     getAllSkillsSuccess(state, action) {
       state.loading = false;
       state.skills = action.payload;
       state.error = null;
-    },
-    getAllSkillsFailed(state, action) {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    addSkillRequest(state) {
-      state.loading = true;
-      state.error = null;
-      state.message = null;
     },
     addSkillSuccess(state, action) {
       state.loading = false;
       state.error = null;
       state.message = action.payload;
     },
-    addSkillFailed(state, action) {
+    deleteSkillSuccess(state, action) {
+      state.loading = false;
+      state.error = null;
+      state.message = action.payload;
+    },
+    skillRequestFailed(state, action) {
       state.loading = false;
       state.error = action.payload;
       state.message = null;
     },
+    // getAllSkillsRequest(state) {
+    //   state.loading = true;
+    //   state.skills = [];
+    //   state.error = null;
+    // },
+    // getAllSkillsFailed(state, action) {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    // },
+    // addSkillRequest(state) {
+    //   state.loading = true;
+    //   state.error = null;
+    //   state.message = null;
+    // },
+    // addSkillFailed(state, action) {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    //   state.message = null;
+    // },
+    // deleteSkillRequest(state) {
+    //   state.loading = true;
+    //   state.error = null;
+    //   state.message = null;
+    // },
+    // deleteSkillFailed(state, action) {
+    //   state.loading = false;
+    //   state.error = action.payload;
+    //   state.message = null;
+    // },
     resetSkills(state) {
       state.loading = false;
       //   state.skills = [];
@@ -55,18 +87,27 @@ const skillSlice = createSlice({
 });
 
 export const {
-  getAllSkillsRequest,
+  skillRequestStart,
+  //   skillRequestSuccess,
   getAllSkillsSuccess,
-  getAllSkillsFailed,
-  addSkillRequest,
   addSkillSuccess,
-  addSkillFailed,
+  deleteSkillSuccess,
+  skillRequestFailed,
+  //   getAllSkillsRequest,
+  //   getAllSkillsSuccess,
+  //   getAllSkillsFailed,
+  //   addSkillRequest,
+  //   addSkillSuccess,
+  //   addSkillFailed,
+  //   deleteSkillRequest,
+  //   deleteSkillSuccess,
+  //   deleteSkillFailed,
   resetSkills,
   clearAllErrors,
 } = skillSlice.actions;
 
 export const getAllSkills = () => async (dispatch) => {
-  dispatch(getAllSkillsRequest());
+  dispatch(skillRequestStart());
   try {
     const { data } = await axios.get(`${server}/api/v1/skill/get-all-skills`, {
       withCredentials: true,
@@ -74,12 +115,12 @@ export const getAllSkills = () => async (dispatch) => {
     dispatch(getAllSkillsSuccess(data.skills));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(getAllSkillsFailed(error.response?.data?.message));
+    dispatch(skillRequestFailed(error.response?.data?.message));
   }
 };
 
 export const addNewSkill = (data) => async (dispatch) => {
-  dispatch(addSkillRequest());
+  dispatch(skillRequestStart());
   try {
     const response = await axios.post(
       `${server}/api/v1/skill/add-skill`,
@@ -92,23 +133,23 @@ export const addNewSkill = (data) => async (dispatch) => {
     dispatch(addSkillSuccess(response.data.message));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(addSkillFailed(error.response?.data?.message));
+    dispatch(skillRequestFailed(error.response?.data?.message));
   }
 };
 
-// export const deleteTimeline = (id) => async (dispatch) => {
-//   dispatch(requestStart());
-//   try {
-//     const { data } = await axios.delete(
-//       `${server}/api/v1/timeline/delete-timeline/${id}`,
-//       { withCredentials: true }
-//     );
-//     dispatch(requestSuccess(data.message));
-//     dispatch(clearAllErrors());
-//   } catch (error) {
-//     dispatch(requestFailed(error.response?.data?.message));
-//   }
-// };
+export const deleteSkill = (id) => async (dispatch) => {
+  dispatch(skillRequestStart());
+  try {
+    const { data } = await axios.delete(
+      `${server}/api/v1/skill/delete-skill/${id}`,
+      { withCredentials: true }
+    );
+    dispatch(deleteSkillSuccess(data.message));
+    dispatch(clearAllErrors());
+  } catch (error) {
+    dispatch(skillRequestFailed(error.response?.data?.message));
+  }
+};
 
 export const clearAllSkillErrors = () => (dispatch) => {
   dispatch(clearAllErrors());

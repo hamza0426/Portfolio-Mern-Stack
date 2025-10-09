@@ -12,17 +12,17 @@ const passwordSlice = createSlice({
   name: "password",
   initialState,
   reducers: {
-    passwordRequest(state) {
+    passwordRequestStart(state) {
       state.loading = true;
       state.error = null;
       state.message = null;
     },
-    passwordSuccess(state, action) {
+    passwordRequestSuccess(state, action) {
       state.loading = false;
       state.error = null;
       state.message = action.payload;
     },
-    passwordFailed(state, action) {
+    passwordRequestFailed(state, action) {
       state.loading = false;
       state.error = action.payload;
       state.message = null;
@@ -35,14 +35,14 @@ const passwordSlice = createSlice({
 });
 
 export const {
-  passwordRequest,
-  passwordSuccess,
-  passwordFailed,
+  passwordRequestStart,
+  passwordRequestSuccess,
+  passwordRequestFailed,
   clearAllErrors,
 } = passwordSlice.actions;
 
 export const forgotPassword = (email) => async (dispatch) => {
-  dispatch(passwordRequest());
+  dispatch(passwordRequestStart());
   try {
     const response = await axios.post(
       `${server}/api/v1/user/forgot-password`,
@@ -50,16 +50,16 @@ export const forgotPassword = (email) => async (dispatch) => {
       { withCredentials: true, headers: { "Content-Type": "application/json" } }
     );
     // console.log(response.data);
-    dispatch(passwordSuccess(response.data.message));
+    dispatch(passwordRequestSuccess(response.data.message));
     dispatch(clearAllErrors());
   } catch (error) {
-    dispatch(passwordFailed(error.response?.data?.message));
+    dispatch(passwordRequestFailed(error.response?.data?.message));
   }
 };
 
 export const resetPassword =
   (token, password, confirmPassword) => async (dispatch) => {
-    dispatch(passwordRequest());
+    dispatch(passwordRequestStart());
     try {
       const { data } = await axios.put(
         `${server}/api/v1/user/reset-password/${token}`,
@@ -69,10 +69,10 @@ export const resetPassword =
           headers: { "Content-Type": "application/json" },
         }
       );
-      dispatch(passwordSuccess(data.message));
+      dispatch(passwordRequestSuccess(data.message));
       dispatch(clearAllErrors());
     } catch (error) {
-      dispatch(passwordFailed(error.response?.data?.message));
+      dispatch(passwordRequestFailed(error.response?.data?.message));
     }
   };
 

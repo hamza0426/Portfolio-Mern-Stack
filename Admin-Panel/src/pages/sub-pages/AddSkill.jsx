@@ -47,7 +47,7 @@ const AddSkill = () => {
       dispatch(resetSkillSlice());
       dispatch(getAllSkills());
     }
-  }, [dispatch, loading, error, message]);
+  }, [dispatch, loading, error]);
 
   return (
     <div className="flex justify-center items-center min-h-screen sm:gap-4 sm:py-4 sm:pl-14">

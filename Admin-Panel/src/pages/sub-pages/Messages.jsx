@@ -7,7 +7,7 @@ import {
   deleteMessage,
   getAllMessages,
   resetMessageSlice,
-} from "../../store/slices/Message/messagesSlice.js";
+} from "../../store/slices/Message/messageSlice.js";
 import SpecialLoader from "../../components/SpecialLoader";
 
 const Messages = () => {

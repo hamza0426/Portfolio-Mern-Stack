@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import { authReducer, passwordReducer, profileReducer } from "./slices/user"; // <-- Correct path to index.js
-import { default as messageReducer } from "./slices/Message/messagesSlice";
+import { default as messageReducer } from "./slices/Message/messageSlice";
 import { default as timelineReducer } from "./slices/Timeline/timelineSlice";
 import { default as skillReducer } from "./slices/Skill/skillSlice";
 

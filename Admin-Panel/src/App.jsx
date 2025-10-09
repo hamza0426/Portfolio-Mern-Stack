@@ -13,7 +13,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { getUser } from "./store/slices/user/authSlice";
-import { getAllMessages } from "./store/slices/Message/messagesSlice";
+import { getAllMessages } from "./store/slices/Message/messageSlice";
 import Messages from "./pages/sub-pages/Messages";
 import { getAllTimelines } from "./store/slices/Timeline/timelineSlice";
 import { getAllSkills } from "./store/slices/Skill/skillSlice";
