@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import {
   addProject,
-  clearProjectErrors,
+  clearAllProjectErrors,
   getAllProjects,
   resetProjectSlice,
 } from "../../store/slices/Project/projectSlice.js";
@@ -51,7 +51,7 @@ const AddProject = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(clearProjectErrors());
+      dispatch(clearAllProjectErrors());
     }
     if (message) {
       toast.success(message);

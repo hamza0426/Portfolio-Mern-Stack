@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const ManageSkills = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  return <div>Manage Skills</div>;
+};
 
 export default ManageSkills;

@@ -111,7 +111,7 @@ export const resetProjectSlice = () => (dispatch) => {
   dispatch(resetProjects());
 };
 
-export const clearProjectErrors = () => (dispatch) => {
+export const clearAllProjectErrors = () => (dispatch) => {
   dispatch(clearAllErrors());
 };
 
