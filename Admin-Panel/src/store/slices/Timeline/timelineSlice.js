@@ -49,14 +49,19 @@ const timelineSlice = createSlice({
     //   state.message = null;
     // },
     getAllTimelinesSuccess(state, action) {
+      state.loading = false;
       state.timeline = action.payload;
       state.error = null;
-      state.loading = false;
     },
     deleteTimelineSuccess(state, action) {
-      state.message = action.payload;
-      state.error = null;
       state.loading = false;
+      state.error = null;
+      state.message = action.payload;
+    },
+    updateTimelineSuccess(state, action) {
+      state.loading = false;
+      state.error = null;
+      state.message = action.payload;
     },
     timelineRequestFailed(state, action) {
       state.loading = false;
@@ -100,6 +105,7 @@ export const {
   // timelineRequestSuccess,
   addTimelineSuccess,
   deleteTimelineSuccess,
+  updateTimelineSuccess,
   getAllTimelinesSuccess,
   timelineRequestFailed,
   // addTimelineRequest,
@@ -157,6 +163,24 @@ export const deleteTimeline = (id) => async (dispatch) => {
       { withCredentials: true }
     );
     dispatch(deleteTimelineSuccess(data.message));
+    dispatch(clearAllErrors());
+  } catch (error) {
+    dispatch(timelineRequestFailed(error.response?.data?.message));
+  }
+};
+
+export const updateTimeline = (id, timelineData) => async (dispatch) => {
+  dispatch(timelineRequestStart());
+  try {
+    const { data } = await axios.put(
+      `${server}/api/v1/timeline/update-timeline/${id}`,
+      timelineData,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    dispatch(updateTimelineSuccess(data.message));
     dispatch(clearAllErrors());
   } catch (error) {
     dispatch(timelineRequestFailed(error.response?.data?.message));
