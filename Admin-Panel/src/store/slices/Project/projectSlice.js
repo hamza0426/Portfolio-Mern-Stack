@@ -7,7 +7,6 @@ const initialState = {
   projects: [],
   error: null,
   message: null,
-  singleProject: {},
 };
 
 const projectSlice = createSlice({
@@ -35,6 +34,11 @@ const projectSlice = createSlice({
       state.error = null;
       state.message = action.payload;
     },
+    updateProjectSuccess(state, action) {
+      state.loading = false;
+      state.message = action.payload;
+      state.error = null;
+    },
     projectRequestFailed(state, action) {
       state.loading = false;
       state.error = action.payload;
@@ -56,6 +60,7 @@ const {
   getAllProjectsSuccess,
   addProjectSuccess,
   deleteProjectSuccess,
+  updateProjectSuccess,
   projectRequestFailed,
   resetProjects,
   clearAllErrors,
@@ -66,7 +71,7 @@ export const getAllProjects = () => async (dispatch) => {
   try {
     const { data } = await axios.get(
       `${server}/api/v1/project/get-all-projects`,
-      { withCredentials: true }
+      { withCredentials: true },
     );
     dispatch(getAllProjectsSuccess(data.projects));
     dispatch(clearAllErrors());
@@ -84,7 +89,7 @@ export const addProject = (projectData) => async (dispatch) => {
       {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
-      }
+      },
     );
     dispatch(addProjectSuccess(response.data.message));
     dispatch(clearAllErrors());
@@ -98,12 +103,31 @@ export const deleteProject = (id) => async (dispatch) => {
   try {
     const { data } = await axios.delete(
       `${server}/api/v1/project/delete-project/${id}`,
-      { withCredentials: true }
+      { withCredentials: true },
     );
     dispatch(deleteProjectSuccess(data.message));
     dispatch(clearAllErrors());
   } catch (error) {
     dispatch(projectRequestFailed(error.response?.data?.message));
+  }
+};
+
+export const updateProject = (id, newData) => async (dispatch) => {
+  dispatch(projectRequestStart());
+  try {
+    const response = await axios.put(
+      `http://localhost:4000/api/v1/project/update-project/${id}`,
+      newData,
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
+    dispatch(updateProjectSuccess(response.data.message));
+    dispatch(projectSlice.actions.clearAllErrors());
+  } catch (error) {
+    console.log(error);
+    dispatch(projectRequestFailed(error.response.data.message));
   }
 };
 

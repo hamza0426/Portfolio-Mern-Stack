@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   const gotoMangeSkills = () => navigate("/skills");
   const gotoMangeTimeline = () => navigate("/timeline");
-  const gotoMangeProjects = () => navigate("/update-project");
+  const gotoMangeProjects = () => navigate("/projects");
 
   const { user } = useSelector((state) => state.auth);
   const {
@@ -39,7 +39,7 @@ const Dashboard = () => {
     error: timelineError,
   } = useSelector((state) => state.timelines);
   const { projects, error: projectError } = useSelector(
-    (state) => state.projects
+    (state) => state.projects,
   );
 
   const [applicationId, setApplicationId] = useState(null);
@@ -230,7 +230,7 @@ const Dashboard = () => {
                           <td className="py-2 px-3">{element.name}</td>
                           <td className="py-2 px-3">
                             <img
-                              src={element.svg?.url}
+                              src={element.img?.url}
                               alt={element.name}
                               className="w-7 h-7"
                             />

@@ -48,8 +48,8 @@ const App = () => {
         <Route path="/timeline" element={<ManageTimeline />} />
         {/* <Route path='/software' element={<} /> */}
         <Route path="/projects" element={<ManageProjects />} />
-        <Route path="/view-project" element={<ViewProject />} />
-        <Route path="/update-project" element={<UpdateProject />} />
+        <Route path="/view-project/:id" element={<ViewProject />} />
+        <Route path="/update-project/:id" element={<UpdateProject />} />
         <Route path="/messages" element={<Messages />} />
       </Routes>
     </Router>

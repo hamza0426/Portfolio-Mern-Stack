@@ -20,10 +20,16 @@ config.env
 # /backend/package-lock.json
 # /backend/package.json
 
-# Frontend specific
+# Admin-Panel specific
 # /Admin-Panel/package.json
 /Admin-Panel/node_modules/
 /Admin-Panel/dist/
 /Admin-Panel/.vite/
 /Admin-Panel/.env
 # /Admin-Panel/package-lock.json
+
+# Frontend specific
+/Frontend/node_modules/
+/Frontend/dist/
+/Frontend/.vite/
+/Frontend/.env
