@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Home from "./pages/Home";
+import Footer from "./pages/Footer";
+import ProjectView from "./pages/ProjectView";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="bg-white dark:bg-gray-900 text-black dark:text-white min-h-screen">
+      <Router>
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="fixed top-5 right-5 z-50 bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded hover:opacity-80 transition"
+        >
+          Toggle Theme
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        <h1 className="ml-4 text-3xl">Hello Theme</h1>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          pauseOnHover={true}
+        />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/project/:id" element={<ProjectView />} />
+          {/* <Route path="/" element={<Home />} /> */}
+        </Routes>
+        <Footer />
+      </Router>
+    </div>
+  );
 }
 
-export default App
+export default App;
