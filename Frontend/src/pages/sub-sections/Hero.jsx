@@ -27,7 +27,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-red-500">
       <div className="flex items-center gap-2 mb-2">
         <span className="bg-green-400 rounded-full h-2 w-2"></span>
         <p>Online</p>
@@ -37,7 +37,7 @@ const Hero = () => {
         className="overflow-x-hidden text-[1.3rem] sm:text-[1.75rem] 
       md:text-[2.2rem] lg:text-[2.8rem] tracking-[2px] mb-4"
       >
-        Hey, I'm Zeeshan
+        Hey, I'm Muhammad Hamza Owais
       </h1>
 
       <h1
@@ -45,7 +45,7 @@ const Hero = () => {
       sm:text-[1.75rem] md:text-[2.2rem] lg:text-[2.8rem] tracking-[15px]"
       >
         <Typewriter
-          words={["FULLSTACK DEVELOPER", "YOUTUBER", "FREELANCER"]}
+          words={["FULLSTACK DEVELOPER", "FREELANCER"]}
           loop={50}
           cursor
           typeSpeed={70}
