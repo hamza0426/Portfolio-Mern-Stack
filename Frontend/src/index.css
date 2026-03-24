@@ -1,4 +1,78 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @import "tailwindcss";
+
+/* ── Slate & Ember Theme — CSS Custom Properties ─────────────────────────
+   In Tailwind v4, custom tokens are defined here in CSS, NOT in tailwind.config.js
+   We register them as both CSS variables AND Tailwind utilities via @theme
+──────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* Fonts */
+  --font-display: "Syne", sans-serif;
+  --font-body:    "DM Sans", sans-serif;
+  --font-mono:    "JetBrains Mono", monospace;
+
+  /* ── Color Tokens ──────────────────────────────────────────────── */
+
+  /* Backgrounds */
+  --color-bg-light:       #F5F5F0;
+  --color-bg-dark:        #18181B;
+  --color-surface-light:  #EBEBEB;
+  --color-surface-dark:   #27272A;
+
+  /* Text */
+  --color-ink-light:      #1A1A2E;
+  --color-ink-dark:       #F0EEE9;
+  --color-muted-light:    #6B7280;
+  --color-muted-dark:     #A1A1AA;
+
+  /* Accents */
+  --color-ember:          #E8630A;
+  --color-amber:          #F5B942;
+
+  /* Borders */
+  --color-border-light:   #D4D4D0;
+  --color-border-dark:    #3F3F46;
+
+  /* ── Animations ────────────────────────────────────────────────── */
+  --animate-fade-up:      fadeUp 0.6s ease forwards;
+  --animate-fade-up-slow: fadeUp 0.8s ease forwards;
+  --animate-fade-in:      fadeIn 0.5s ease forwards;
+  --animate-slide-right:  slideRight 0.6s ease forwards;
+  --animate-pulse-slow:   pulse 2s ease-in-out infinite;
+}
+
+/* ── Keyframes ─────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Dark Mode: swap token values when .dark is on <html> ──────────────── */
+/* 
+  This is the key trick — instead of writing dark: classes everywhere for 
+  backgrounds/text, we swap the CSS variable values in dark mode.
+  This means bg-bg-light automatically becomes the dark bg when .dark is active.
+*/
+:root {
+  --bg-page:     var(--color-bg-light);
+  --bg-surface:  var(--color-surface-light);
+  --text-primary: var(--color-ink-light);
+  --text-muted:  var(--color-muted-light);
+  --border-col:  var(--color-border-light);
+}
+
+.dark {
+  --bg-page:     var(--color-bg-dark);
+  --bg-surface:  var(--color-surface-dark);
+  --text-primary: var(--color-ink-dark);
+  --text-muted:  var(--color-muted-dark);
+  --border-col:  var(--color-border-dark);
+}
