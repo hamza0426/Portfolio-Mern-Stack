@@ -1,78 +1,230 @@
 @import "tailwindcss";
 
-/* ── Slate & Ember Theme — CSS Custom Properties ─────────────────────────
-   In Tailwind v4, custom tokens are defined here in CSS, NOT in tailwind.config.js
-   We register them as both CSS variables AND Tailwind utilities via @theme
-──────────────────────────────────────────────────────────────────────── */
+/* ========================================
+   PROFESSIONAL COLOR THEME - SLATE & INDIGO
+   ======================================== */
 
-@theme {
-  /* Fonts */
-  --font-display: "Syne", sans-serif;
-  --font-body:    "DM Sans", sans-serif;
-  --font-mono:    "JetBrains Mono", monospace;
-
-  /* ── Color Tokens ──────────────────────────────────────────────── */
-
-  /* Backgrounds */
-  --color-bg-light:       #F5F5F0;
-  --color-bg-dark:        #18181B;
-  --color-surface-light:  #EBEBEB;
-  --color-surface-dark:   #27272A;
-
-  /* Text */
-  --color-ink-light:      #1A1A2E;
-  --color-ink-dark:       #F0EEE9;
-  --color-muted-light:    #6B7280;
-  --color-muted-dark:     #A1A1AA;
-
-  /* Accents */
-  --color-ember:          #E8630A;
-  --color-amber:          #F5B942;
-
-  /* Borders */
-  --color-border-light:   #D4D4D0;
-  --color-border-dark:    #3F3F46;
-
-  /* ── Animations ────────────────────────────────────────────────── */
-  --animate-fade-up:      fadeUp 0.6s ease forwards;
-  --animate-fade-up-slow: fadeUp 0.8s ease forwards;
-  --animate-fade-in:      fadeIn 0.5s ease forwards;
-  --animate-slide-right:  slideRight 0.6s ease forwards;
-  --animate-pulse-slow:   pulse 2s ease-in-out infinite;
-}
-
-/* ── Keyframes ─────────────────────────────────────────────────────────── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-@keyframes slideRight {
-  from { opacity: 0; transform: translateX(-20px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-/* ── Dark Mode: swap token values when .dark is on <html> ──────────────── */
-/* 
-  This is the key trick — instead of writing dark: classes everywhere for 
-  backgrounds/text, we swap the CSS variable values in dark mode.
-  This means bg-bg-light automatically becomes the dark bg when .dark is active.
-*/
 :root {
-  --bg-page:     var(--color-bg-light);
-  --bg-surface:  var(--color-surface-light);
-  --text-primary: var(--color-ink-light);
-  --text-muted:  var(--color-muted-light);
-  --border-col:  var(--color-border-light);
+  /* Light Mode Colors */
+  --bg-primary: #f5f7fa;        /* Soft greyish background */
+  --bg-secondary: #ffffff;      /* Pure white for sections */
+  --bg-tertiary: #eef2f7;       /* Subtle grey dividers */
+  
+  --text-primary: #0f172a;      /* Deep dark blue-black */
+  --text-secondary: #4b5563;    /* Medium grey */
+  --text-tertiary: #8892a6;     /* Light grey */
+  
+  --accent-primary: #3b82f6;    /* Professional blue */
+  --accent-secondary: #1e40af;  /* Darker blue for hover */
+  --accent-light: #dbeafe;      /* Light blue for backgrounds */
+  
+  --border-color: #e5e9f0;      /* Subtle borders */
+  --shadow-color: rgba(15, 23, 42, 0.08);
 }
 
-.dark {
-  --bg-page:     var(--color-bg-dark);
-  --bg-surface:  var(--color-surface-dark);
-  --text-primary: var(--color-ink-dark);
-  --text-muted:  var(--color-muted-dark);
-  --border-col:  var(--color-border-dark);
+/* Dark Mode - Updated */
+html.dark {
+  --bg-primary: #0f172a;        /* Deep dark background */
+  --bg-secondary: #1a2847;      /* Dark slate for cards */
+  --bg-tertiary: #243554;       /* Darker slate */
+  
+  --text-primary: #f0f9ff;      /* Light sky blue */
+  --text-secondary: #cbd5e1;    /* Light grey */
+  --text-tertiary: #94a3b8;     /* Medium grey */
+  
+  --accent-primary: #60a5fa;    /* Bright blue */
+  --accent-secondary: #3b82f6;  /* Medium blue for hover */
+  --accent-light: #1e3a8a;      /* Dark blue for backgrounds */
+  
+  --border-color: #334155;      /* Subtle dark borders */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   GLOBAL STYLES
+   ======================================== */
+
+* {
+  @apply transition-colors duration-300;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-[var(--bg-primary)] text-[var(--text-primary)];
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ========================================
+   BACKGROUND IMAGE - SUBTLE TECH PATTERN
+   ======================================== */
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ========================================
+   HEADER STYLING
+   ======================================== */
+
+header {
+  @apply fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b;
+  background-color: var(--bg-primary);
+  border-color: var(--border-color);
+  height: 70px;
+}
+
+/* ========================================
+   TYPOGRAPHY SYSTEM
+   ======================================== */
+
+h1 {
+  @apply font-bold tracking-tight;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+h2 {
+  @apply font-bold tracking-tight;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.3;
+  color: var(--text-primary);
+}
+
+h3 {
+  @apply font-semibold;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  color: var(--text-primary);
+}
+
+p {
+  @apply leading-relaxed;
+  color: var(--text-secondary);
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+}
+
+/* ========================================
+   BUTTON STYLING
+   ======================================== */
+
+.btn {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-300 cursor-pointer border-0;
+  @apply hover:scale-105 active:scale-95;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+  focus-ring-color: var(--accent-primary);
+  focus-ring-offset-color: var(--bg-primary);
+}
+
+.btn-primary {
+  @apply text-white shadow-lg;
+  background-color: var(--accent-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--accent-secondary);
+}
+
+.btn-secondary {
+  @apply border-2;
+  background-color: transparent;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-light);
+}
+
+/* ========================================
+   LINK STYLING
+   ======================================== */
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-secondary);
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--accent-primary);
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* ========================================
+   SCROLL BAR STYLING
+   ======================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-secondary);
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.glass {
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+}
+
+.card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  @apply shadow-sm transition-all duration-300 hover:shadow-lg;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.divider {
+  @apply h-px my-12;
+  background-color: var(--border-color);
 }
